@@ -9,17 +9,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: dummy-data
+          ref: dummy-java
 
       - name: Generate Directory Listings
         uses: jayanta525/github-pages-directory-listing@v4.1.0
         with:
-          FOLDER: data
+          FOLDER: javahome
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'data'
+          path: 'javahome'
 
   deploy:
     needs: pages-directory-listing
