@@ -1,0 +1,1 @@
+import java.awt.*;class Room{	public static int x, y, width, length;	private Color GRAY = new Color(128,128,128);	private Color BLACK = new Color(0,0,0);			public Room(){			x = 0;		y = 0;		width = 512;		length = 300;		}	public void draw(Graphics page){			page.setColor (BLACK);		page.drawRect (x, y, width, length);			}}

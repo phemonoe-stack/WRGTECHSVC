@@ -1,0 +1,1 @@
+import java.awt.*;import java.applet.*;import java.io.*;public class PrimeApplet extends Applet{	TextArea text;	PrimeDriver driver = new PrimeDriver();	public void init(){			text = new TextArea("", 10,10);     	text.setEditable( false ); 		this.add(text);	}	public void start(){			driver.calculatePrime();		text.setText(driver.toString());				}}

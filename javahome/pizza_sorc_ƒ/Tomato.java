@@ -1,0 +1,1 @@
+public class Tomato extends Topping{	public Tomato(){			super("Tomato", .75);		}}

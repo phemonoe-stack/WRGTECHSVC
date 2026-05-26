@@ -1,0 +1,91 @@
+Name:	Account Number:	Balance:
+William Gannon		#00001	0.99
+Richard Draper		#00002	100000.01
+William Voght		#00003	211918.17
+Shirley Johnson		#00004	300100.92
+Richard Draper		#00005	60.02
+Dudley Dorite		#00006	1000.02
+Phil Houser			#00007	6.08
+Jason Rabbits		#00008	2.04
+Phil Grammer		#00009	4.02
+Douglas McDonnell	#00010	474.95
+Wink Martindale		#00011	500.05
+Fred Esprez			#00012	0.01
+Ronald McDonald		#00013	1.99
+Robert Marley		#00014	420.01
+Jerome Garcia		#00015	1995.65
+Dylan Bobbie		#00016	0.44
+James Hendrickson	#00017	69.99
+John Winston		#00018	9.09
+Ono Lennon			#00019	9.09
+Jill Peters			#00020	0.55
+Kim Gilder			#00021	77.69
+Archibald Barasol	#00022	63.89
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+
+Account Info: 
+James Hendrickson	#00017	69.99
+Withdrawl from account:  #00017
+Amount:  500.0
+**Insufficient Funds.
+Balance:  69.99
+Withdrawl from account:  #00017
+Amount:  69.99
+Balance:  0.0
+
+Account Info: 
+William Gannon		#00001	0.99
+Deposit into account:  #00001
+Amount:  -100000.0
+**To apply for a loan, speak with one of our service representitives.
+Balance:  0.99
+Withdrawl from account:  #00001
+Amount:  -10000.0
+**If you'd like to make a deposit, please try again.
+
+Account Info: 
+James Hendrickson	#00017	0.0
+Deposit into account:  #00017
+Amount:  50000.0
+Balance:  50000.0
+William Gannon		#00001	0.99
+
+--Daily Interest--
+Name:	Account Number:	Balance:
+William Gannon		#00001	1.0197
+Richard Draper		#00002	103000.0103
+William Voght		#00003	218275.7151
+Shirley Johnson		#00004	309103.94759999996
+Richard Draper		#00005	61.820600000000006
+Dudley Dorite		#00006	1030.0206
+Phil Houser			#00007	6.2624
+Jason Rabbits		#00008	2.1012
+Phil Grammer		#00009	4.140599999999999
+Douglas McDonnell	#00010	489.19849999999997
+Wink Martindale		#00011	515.0515
+Fred Esprez			#00012	0.0103
+Ronald McDonald		#00013	2.0497
+Robert Marley		#00014	432.6103
+Jerome Garcia		#00015	2055.5195
+Dylan Bobbie		#00016	0.4532
+James Hendrickson	#00017	51500.0
+John Winston		#00018	9.3627
+Ono Lennon			#00019	9.3627
+Jill Peters			#00020	0.5665
+Kim Gilder			#00021	80.02069999999999
+Archibald Barasol	#00022	65.8067
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0
+-Account Empty-	#00000	0.0

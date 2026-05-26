@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fidchell</title>
+
+<style>
+    body{
+        background:#1c1b18;
+        color:#f0e6c8;
+        font-family:Georgia, serif;
+        text-align:center;
+        margin:0;
+        padding:20px;
+    }
+
+    h1{
+        margin-bottom:10px;
+    }
+
+    #gameInfo{
+        margin-bottom:15px;
+        font-size:18px;
+    }
+
+    .board{
+        display:grid;
+        grid-template-columns:repeat(7,70px);
+        grid-template-rows:repeat(7,70px);
+        gap:2px;
+        justify-content:center;
+        margin:auto;
+        background:#3a2f1d;
+        padding:8px;
+        border:4px solid #8b6b3f;
+        width:max-content;
+    }
+
+    .cell{
+        width:70px;
+        height:70px;
+        background:#c8ad7f;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:34px;
+        cursor:pointer;
+        user-select:none;
+    }
+
+    .dark{
+        background:#b49463;
+    }
+
+    .selected{
+        outline:4px solid yellow;
+    }
+
+    .valid{
+        background:#7fb069 !important;
+    }
+
+    .throne{
+        background:#8c6a43 !important;
+    }
+
+    .piece{
+        border-radius:50%;
+        width:50px;
+        height:50px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-weight:bold;
+    }
+
+    .attacker{
+        background:#222;
+        color:white;
+    }
+
+    .defender{
+        background:#ddd;
+        color:black;
+    }
+
+    .king{
+        background:gold;
+        color:black;
+        border:3px solid #fff;
+    }
+
+    button{
+        margin-top:15px;
+        padding:10px 20px;
+        font-size:16px;
+        cursor:pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Fidchell</h1>
+
+<div id="gameInfo">
+    Current Turn:
+    <span id="turnDisplay">Defenders</span>
+</div>
+
+<div class="board" id="board"></div>
+
+<button onclick="resetGame()">Restart Game</button>
+
+<script>
+
+const SIZE = 7;
+
+const ATTACKER = "A";
+const DEFENDER = "D";
+const KING = "K";
+
+const throne = { row:3, col:3 };
+
+let currentPlayer = DEFENDER;
+
+let selectedPiece = null;
+
+let board = [];
+
+function initializeBoard(){
+
+    board = [
+        ["A","A","A","A","A","A","A"],
+        ["A","","","","","","A"],
+        ["A","","D","D","D","","A"],
+        ["A","","D","K","D","","A"],
+        ["A","","D","D","D","","A"],
+        ["A","","","","","","A"],
+        ["A","A","A","A","A","A","A"]
+    ];
+
+    currentPlayer = DEFENDER;
+    selectedPiece = null;
+
+    renderBoard();
+}
+
+function renderBoard(){
+
+    const boardElement = document.getElementById("board");
+    boardElement.innerHTML = "";
+
+    for(let row=0; row<SIZE; row++){
+
+        for(let col=0; col<SIZE; col++){
+
+            const cell = document.createElement("div");
+
+            cell.classList.add("cell");
+
+            if((row + col) % 2 === 0){
+                cell.classList.add("dark");
+            }
+
+            if(row === throne.row && col === throne.col){
+                cell.classList.add("throne");
+            }
+
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+
+            const piece = board[row][col];
+
+            if(piece){
+
+                const pieceDiv = document.createElement("div");
+                pieceDiv.classList.add("piece");
+
+                if(piece === ATTACKER){
+                    pieceDiv.classList.add("attacker");
+                    pieceDiv.textContent = "A";
+                }
+
+                if(piece === DEFENDER){
+                    pieceDiv.classList.add("defender");
+                    pieceDiv.textContent = "D";
+                }
+
+                if(piece === KING){
+                    pieceDiv.classList.add("king");
+                    pieceDiv.textContent = "K";
+                }
+
+                cell.appendChild(pieceDiv);
+            }
+
+            cell.addEventListener("click", () => handleClick(row,col));
+
+            boardElement.appendChild(cell);
+        }
+    }
+
+    document.getElementById("turnDisplay").textContent =
+        currentPlayer === DEFENDER
+        ? "Defenders"
+        : "Attackers";
+
+    highlightValidMoves();
+}
+
+function handleClick(row,col){
+
+    const piece = board[row][col];
+
+    if(selectedPiece){
+
+        const validMoves = getValidMoves(selectedPiece.row, selectedPiece.col);
+
+        const clickedValid = validMoves.some(
+            move => move.row === row && move.col === col
+        );
+
+        if(clickedValid){
+
+            movePiece(
+                selectedPiece.row,
+                selectedPiece.col,
+                row,
+                col
+            );
+
+            selectedPiece = null;
+
+            renderBoard();
+
+            checkVictory();
+
+            currentPlayer =
+                currentPlayer === DEFENDER
+                ? ATTACKER
+                : DEFENDER;
+
+            renderBoard();
+
+            return;
+        }
+    }
+
+    if(pieceBelongsToCurrentPlayer(piece)){
+
+        selectedPiece = { row, col };
+
+        renderBoard();
+    }
+}
+
+function pieceBelongsToCurrentPlayer(piece){
+
+    if(currentPlayer === DEFENDER){
+        return piece === DEFENDER || piece === KING;
+    }
+
+    return piece === ATTACKER;
+}
+
+function highlightValidMoves(){
+
+    if(!selectedPiece) return;
+
+    const cells = document.querySelectorAll(".cell");
+
+    cells.forEach(cell => {
+
+        const row = Number(cell.dataset.row);
+        const col = Number(cell.dataset.col);
+
+        if(
+            row === selectedPiece.row &&
+            col === selectedPiece.col
+        ){
+            cell.classList.add("selected");
+        }
+    });
+
+    const validMoves = getValidMoves(
+        selectedPiece.row,
+        selectedPiece.col
+    );
+
+    validMoves.forEach(move => {
+
+        cells.forEach(cell => {
+
+            if(
+                Number(cell.dataset.row) === move.row &&
+                Number(cell.dataset.col) === move.col
+            ){
+                cell.classList.add("valid");
+            }
+        });
+    });
+}
+
+function getValidMoves(row,col){
+
+    const moves = [];
+
+    const directions = [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+    ];
+
+    for(const [dr,dc] of directions){
+
+        let r = row + dr;
+        let c = col + dc;
+
+        while(
+            r >= 0 &&
+            r < SIZE &&
+            c >= 0 &&
+            c < SIZE &&
+            board[r][c] === ""
+        ){
+
+            moves.push({ row:r, col:c });
+
+            r += dr;
+            c += dc;
+        }
+    }
+
+    return moves;
+}
+
+function movePiece(fromRow,fromCol,toRow,toCol){
+
+    board[toRow][toCol] = board[fromRow][fromCol];
+    board[fromRow][fromCol] = "";
+
+    checkCaptures(toRow,toCol);
+}
+
+function checkCaptures(row,col){
+
+    const piece = board[row][col];
+
+    const enemy =
+        piece === ATTACKER
+        ? [DEFENDER,KING]
+        : [ATTACKER];
+
+    const directions = [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+    ];
+
+    for(const [dr,dc] of directions){
+
+        const enemyRow = row + dr;
+        const enemyCol = col + dc;
+
+        const beyondRow = row + dr*2;
+        const beyondCol = col + dc*2;
+
+        if(
+            enemyRow < 0 ||
+            enemyRow >= SIZE ||
+            enemyCol < 0 ||
+            enemyCol >= SIZE
+        ){
+            continue;
+        }
+
+        const target = board[enemyRow][enemyCol];
+
+        if(enemy.includes(target)){
+
+            if(
+                beyondRow >= 0 &&
+                beyondRow < SIZE &&
+                beyondCol >= 0 &&
+                beyondCol < SIZE
+            ){
+
+                const beyond = board[beyondRow][beyondCol];
+
+                if(beyond === piece){
+
+                    board[enemyRow][enemyCol] = "";
+                }
+            }
+        }
+    }
+}
+
+function checkVictory(){
+
+    for(let i=0;i<SIZE;i++){
+
+        if(board[0][i] === KING ||
+           board[6][i] === KING ||
+           board[i][0] === KING ||
+           board[i][6] === KING){
+
+            setTimeout(()=>{
+                alert("The King Escapes! Defenders Win!");
+            },100);
+
+            return;
+        }
+    }
+
+    let kingExists = false;
+
+    for(let row=0;row<SIZE;row++){
+
+        for(let col=0;col<SIZE;col++){
+
+            if(board[row][col] === KING){
+                kingExists = true;
+            }
+        }
+    }
+
+    if(!kingExists){
+
+        setTimeout(()=>{
+            alert("The King Has Been Captured! Attackers Win!");
+        },100);
+    }
+}
+
+function resetGame(){
+    initializeBoard();
+}
+
+initializeBoard();
+
+</script>
+
+</body>
+</html>
