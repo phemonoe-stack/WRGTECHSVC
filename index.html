@@ -1,0 +1,71 @@
+        <html>
+        <head>
+		<title>Space Monkey Server</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+		h1 {
+			font-size: 3.5rem;
+			font-weight: 900;
+			text-align: center;
+
+			background: linear-gradient(
+			90deg,
+			red,
+			orange,
+			yellow,
+			green,
+			cyan,
+			blue,
+			violet
+			);
+			background-size: 400%;
+			animation: rainbow 8s linear infinite reverse;
+
+			-webkit-background-clip: text;
+			color: transparent;
+
+			/* optional glow */
+			/*text-shadow: 0 0 10px rgba(255,255,255,0.4); */
+			text-shadow:
+						0 0 10px rgba(255,255,255,0.6),
+						0 0 20px rgba(255,255,255,0.4),
+						0 0 30px rgba(255,255,255,0.2);
+			}
+			@keyframes rainbow {
+				0% { background-position: 0%; }
+				100% { background-position: 400%; }
+			}
+			
+		
+			body:after{
+				content:"";
+				position:fixed; /* stretch a fixed position to the whole screen */
+				top:0;
+				height:100vh; /* fix for mobile browser address bar appearing disappearing */
+				left:0;
+				right:0;
+				z-index:-1; /* needed to keep in the background */
+				background: url(monkeysee.png) center center;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+		}
+		</style>
+
+
+		</head>
+		
+        <body>
+		<center><h1>Hello from Albert I Apophis 2029 HTTP Server!</h1>
+		<hr>
+		<p>Monkey See Monkey Do</p><br>
+		<img src="/images/4lights.webp"></img></center>
+		<a href="javahome">javahome</a>
+		<a href="Fidchell/fidchell.v6.2.1.html">Fidchell</a>
+		<a href="images">images</a>
+		<br>
+		<hr>
+		</body>
+		<footer></footer>
+        </html>
