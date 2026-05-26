@@ -1,1 +1,0 @@
-public class Sausage extends Topping{	public Sausage(){			super("Sausage", .75);		}}

@@ -1,1 +1,0 @@
-public class Bacon extends Topping{	public Bacon(){			super("Bacon", .75);		}}

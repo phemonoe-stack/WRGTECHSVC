@@ -1,1 +1,0 @@
-class VerticalRobot extends Robot{	public void move(){}}

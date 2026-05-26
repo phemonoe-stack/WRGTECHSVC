@@ -1,1 +1,0 @@
-public class Mushrooms extends Topping{	public Mushrooms(){			super("Mushrooms", .75);		}}
